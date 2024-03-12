@@ -25,9 +25,7 @@ except KeyError:
 
 if __name__ == "__main__":
     # logger.info(f"Token value: {SOME_SECRET}")
-
-    r = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat=19.852156&lon=79.352093&appid={SOME_SECRET}')
+    r = requests.get(f"http://api.weatherapi.com/v1/current.json?key={SOME_SECRET}&q=Ballarpur&aqi=yes")
     if r.status_code == 200:
         data = r.json()
-        sky_details = data["weather"][0]["description"]
-        logger.info(f'Weather in ballarpur: {sky_details}')
+        logger.info(f"The temerature in {data['location']['name']} is {data['current']['temp_c']} & Sky is {data['current']['condition']['text']}.")
