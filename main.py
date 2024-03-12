@@ -25,7 +25,8 @@ except KeyError:
 
 if __name__ == "__main__":
     # logger.info(f"Token value: {SOME_SECRET}")
-    r = requests.get(f"http://api.weatherapi.com/v1/current.json?key={SOME_SECRET}&q=Ballarpur&aqi=yes")
+    city = Ballarpur
+    r = requests.get(f"http://api.weatherapi.com/v1/current.json?key={SOME_SECRET}&q={city}&aqi=yes")
     if r.status_code == 200:
         data = r.json()
-        logger.info(f"The temerature in {data['location']['name']} is {data['current']['temp_c']} & Sky is {data['current']['condition']['text']}.")
+        logger.info(f"The Temperature in {data['location']['name']} is {data['current']['temp_c']}°C & Sky is {data['current']['condition']['text']}")
