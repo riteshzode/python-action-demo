@@ -6,7 +6,7 @@ on:
     branches: [ main ]
   # Additionally, run on schedule every 12 hours
   schedule:
-    - cron: '0 8 * * *'  # This line runs the job daily at 8 AM
+    - cron: '0 23 * * *'  # This line runs the job daily at 8 AM
 
     
 jobs:
