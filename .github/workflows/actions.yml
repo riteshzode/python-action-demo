@@ -1,47 +1,41 @@
-name: run main.py
+name: Run main.py
 
 on:
   # Run on push to the main branch
   push:
     branches: [ main ]
-  # Additionally, run on schedule every 12 hours
+  # Additionally, run on schedule every 12 hours in IST (India Standard Time)
   schedule:
-    - cron: '0 2 * * *'  # This line runs the job daily at 8 AM
+    - cron: '0 8 * * *'  # Runs daily at 8 AM IST
+    - timezone: 'Asia/Kolkata'  # Specifies Indian Kolkata time zone
 
-    
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
 
-      - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to github runner
+      - uses: actions/checkout@v2  # Checkout the repository content
 
-      - name: setup python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
-          python-version: '3.9' # install the python version needed
-          
-      - name: install python packages
-        run: |
+          python-version: '3.9'  # Install Python version 3.9
+
+      - run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          
-      - name: execute py script # run main.py
+          pip install -r requirements.txt  # Install Python packages
+
+      - run: python main.py
         env:
           SOME_SECRET: ${{ secrets.SOME_SECRET }}
-          CITY: ${{ secrets.CITY }}
-        run: python main.py
-          
-      - name: commit files
-        run: |
+          CITY: ${{ secrets.CITY }}  # Use environment variables if needed
+
+      - run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
           git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
-          
-      - name: push changes
-        uses: ad-m/github-push-action@v0.8.0
+
+      - uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main 
+          branch: main
