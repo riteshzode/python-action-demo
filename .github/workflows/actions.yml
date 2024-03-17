@@ -7,8 +7,9 @@ on:
   # Additionally, run on schedule every 12 hours in IST (India Standard Time)
   schedule:
     - cron: '0 8 * * *'  # Runs daily at 8 AM IST
-    - timezone: 'Asia/Kolkata'  # Specifies Indian Kolkata time zone
-
+    - cron: '01 20 * * 1-5'  # Runs every weekday at 8:01 PM IST
+    - timezone: 'Asia/Kolkata'  # Specifies Indian Kolkata time zone for both schedules
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
